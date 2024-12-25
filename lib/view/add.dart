@@ -3,8 +3,8 @@ import 'package:curd_supabase/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class AddPage extends StatelessWidget {
+ const AddPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +36,7 @@ class HomePage extends StatelessWidget {
                         subtitle: value.subtitleCtrl.text.trim(),
                         title: value.titleCtrl.text.trim()));
                   },
+               
                   child: Text("submit")),
             ],
           ),
