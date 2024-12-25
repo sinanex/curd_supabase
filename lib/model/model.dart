@@ -3,7 +3,7 @@ class todoModel {
   String? title;
   String? subtitle;
 
-  todoModel({required this.id, required this.subtitle, required this.title});
+  todoModel({this.id, required this.subtitle, required this.title});
 
   factory todoModel.fromJson(Map<String, dynamic> json) {
     return todoModel(

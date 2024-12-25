@@ -1,13 +1,14 @@
+import 'package:curd_supabase/model/model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseServices {
   final supabase = Supabase.instance.client.from('todoApp');
 
-  Future<void> insertData(
-      {required String title, required String subtitle}) async {
+  Future<void> insertData(todoModel todoData) async {
+    
     try {
       final response = await supabase.insert([
-        {'title': title, 'subtitle': subtitle}
+        todoData.toJson()
       ]);
     } catch (e) {
       print('Error inserting data: $e');

@@ -1,3 +1,4 @@
+import 'package:curd_supabase/model/model.dart';
 import 'package:curd_supabase/services/services.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,8 @@ class HomePage extends StatelessWidget {
             ),
             ElevatedButton(onPressed: (){
               SupabaseServices supabaseServices = SupabaseServices();
-              supabaseServices.insertData(title: titleCtrl.text, subtitle: subtitleCtrl.text);
+            final data =  todoModel( subtitle: subtitleCtrl.text, title: titleCtrl.text);
+                   supabaseServices.insertData(data);
             }, child: Text("submit")),
           ],
         ),
