@@ -1,6 +1,8 @@
 import 'package:curd_supabase/constants/supbaseKey.dart';
+import 'package:curd_supabase/controller/provider.dart';
 import 'package:curd_supabase/home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 
@@ -16,8 +18,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
+    return ChangeNotifierProvider(
+      create: (context) => TodoProvider(),
+      child: MaterialApp(
+        home: HomePage(),
+      ),
     );
   }
 }

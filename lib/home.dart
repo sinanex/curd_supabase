@@ -1,11 +1,10 @@
+import 'package:curd_supabase/controller/provider.dart';
 import 'package:curd_supabase/model/model.dart';
-import 'package:curd_supabase/services/services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  TextEditingController titleCtrl = TextEditingController();
-  TextEditingController subtitleCtrl = TextEditingController();
-   HomePage({super.key});
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,29 +12,33 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          spacing: 20,
-          children: [
-            TextField(
-              controller: titleCtrl,
-              decoration: InputDecoration(
-                hintText: 'title',
-                border: OutlineInputBorder(),
+        child: Consumer<TodoProvider>(
+          builder: (context, value, child) => Column(
+            spacing: 20,
+            children: [
+              TextField(
+                controller: value.titleCtrl,
+                decoration: InputDecoration(
+                  hintText: 'title',
+                  border: OutlineInputBorder(),
+                ),
               ),
-            ),
-             TextField(
-              controller: subtitleCtrl,
-              decoration: InputDecoration(
-                hintText: 'subtitle',
-                border: OutlineInputBorder(),
+              TextField(
+                controller: value.subtitleCtrl,
+                decoration: InputDecoration(
+                  hintText: 'subtitle',
+                  border: OutlineInputBorder(),
+                ),
               ),
-            ),
-            ElevatedButton(onPressed: (){
-              SupabaseServices supabaseServices = SupabaseServices();
-            final data =  todoModel( subtitle: subtitleCtrl.text, title: titleCtrl.text);
-                   supabaseServices.insertData(data);
-            }, child: Text("submit")),
-          ],
+              ElevatedButton(
+                  onPressed: () {
+                    value.addData(todoModel(
+                        subtitle: value.subtitleCtrl.text.trim(),
+                        title: value.titleCtrl.text.trim()));
+                  },
+                  child: Text("submit")),
+            ],
+          ),
         ),
       ),
     );

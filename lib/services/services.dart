@@ -5,11 +5,8 @@ class SupabaseServices {
   final supabase = Supabase.instance.client.from('todoApp');
 
   Future<void> insertData(todoModel todoData) async {
-    
     try {
-      final response = await supabase.insert([
-        todoData.toJson()
-      ]);
+ await supabase.insert([todoData.toJson()]);
     } catch (e) {
       print('Error inserting data: $e');
     }
