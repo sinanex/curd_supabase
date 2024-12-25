@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'dart:developer';
+
 
 import 'package:curd_supabase/model/model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -14,9 +13,9 @@ class SupabaseServices {
       print('Error inserting data: $e');
     }
   }
-  Future<void>deleteData()async{
+  Future<void>deleteData(int id)async{
     try {
-      await supabase.delete().eq('id', 9);
+      await supabase.delete().eq('id', id);
     } catch (e) {
       
     }
@@ -30,7 +29,7 @@ class SupabaseServices {
       final response = await supabase.select('*'); 
 
       if (response.isNotEmpty) {
-        return response.map<todoModel>((json) => todoModel.fromJson(json)).toList();
+        return response.map((json) => todoModel.fromJson(json)).toList();
       } else {
         return [];
       }

@@ -19,6 +19,12 @@ class TodoProvider extends ChangeNotifier {
 
   void addData(todoModel data) async {
     services.insertData(data);
+    fetchData();
+    notifyListeners();
+  }
+  void deleteData({required int id})async{
+    services.deleteData(id);
+    fetchData();
     notifyListeners();
   }
 }

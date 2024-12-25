@@ -1,5 +1,4 @@
 import 'package:curd_supabase/controller/provider.dart';
-import 'package:curd_supabase/services/services.dart';
 import 'package:curd_supabase/view/add.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,6 +20,14 @@ class HomePage extends StatelessWidget {
           itemBuilder: (context, index) {
          final data = value.dataList[index];
           return ListTile(
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+              IconButton(onPressed: (){
+                  value.deleteData(id: data.id!);
+              }, icon: Icon(Icons.delete)),
+              ],
+            ),
             title: Text(data.title!),
           );
         },),
