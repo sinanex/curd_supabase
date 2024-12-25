@@ -7,12 +7,16 @@ import 'package:flutter/material.dart';
 class TodoProvider extends ChangeNotifier {
   SupabaseServices services = SupabaseServices();
   List<todoModel> dataList = [];
+  bool isLodd = false;
   TextEditingController titleCtrl = TextEditingController();
   TextEditingController subtitleCtrl = TextEditingController();
   void fetchData() async {
     dataList = await services.fetchData();
-    if(dataList.isNotEmpty){
+    if (dataList.isNotEmpty) {
       log("data fetch success");
+      isLodd = true;
+    } else {
+      isLodd = false;
     }
     notifyListeners();
   }
@@ -20,11 +24,22 @@ class TodoProvider extends ChangeNotifier {
   void addData(todoModel data) async {
     services.insertData(data);
     fetchData();
+    titleCtrl.clear;
+    subtitleCtrl.clear();
     notifyListeners();
   }
-  void deleteData({required int id})async{
+
+  void deleteData({required int id}) async {
     services.deleteData(id);
     fetchData();
     notifyListeners();
+  }
+  void updateData({required todoModel data ,required int id})async{
+  await services.updateData(data, id);
+  fetchData();
+  notifyListeners();
+  }
+  void refreshData(){
+    fetchData();
   }
 }

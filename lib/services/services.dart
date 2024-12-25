@@ -1,4 +1,4 @@
-
+import 'dart:developer';
 
 import 'package:curd_supabase/model/model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -8,25 +8,21 @@ class SupabaseServices {
 
   Future<void> insertData(todoModel todoData) async {
     try {
- await supabase.insert([todoData.toJson()]);
+      await supabase.insert([todoData.toJson()]);
     } catch (e) {
       print('Error inserting data: $e');
     }
   }
-  Future<void>deleteData(int id)async{
+
+  Future<void> deleteData(int id) async {
     try {
       await supabase.delete().eq('id', id);
-    } catch (e) {
-      
-    }
-
-    
+    } catch (e) {}
   }
-
 
   Future<List<todoModel>> fetchData() async {
     try {
-      final response = await supabase.select('*'); 
+      final response = await supabase.select('*');
 
       if (response.isNotEmpty) {
         return response.map((json) => todoModel.fromJson(json)).toList();
@@ -34,9 +30,21 @@ class SupabaseServices {
         return [];
       }
     } catch (e) {
-      print('Error fetching data: $e'); 
+      print('Error fetching data: $e');
       return [];
     }
   }
+  Future<void>updateData(todoModel data , int id)async{
+try {
+   final res =  await supabase.update(data.toJson()).eq('id', id).select().asStream();
+ if(res != null){
+  log("data updated sucess");
+ }else{
+  log("df");
+ }
+} catch (e) {
+  log("$e");
 }
 
+  }
+}
