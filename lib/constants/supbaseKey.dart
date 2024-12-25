@@ -1,0 +1,4 @@
+
+const String url = 'https://ggqzlvjlhzqgsweivlko.supabase.co';
+const String anon =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdncXpsdmpsaHpxZ3N3ZWl2bGtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ2NzU1NzEsImV4cCI6MjA1MDI1MTU3MX0.mT7LSj7iJ0h7o58iNMkQZOOOkqDIiHGoYkx2Y26pRm8';
