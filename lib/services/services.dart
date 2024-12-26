@@ -1,5 +1,6 @@
-import 'dart:developer';
 
+import 'dart:developer';
+import 'dart:io';
 import 'package:curd_supabase/model/model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -17,7 +18,9 @@ class SupabaseServices {
   Future<void> deleteData(int id) async {
     try {
       await supabase.delete().eq('id', id);
-    } catch (e) {}
+    } catch (e) {
+      log('Error deleting data: $e');
+    }
   }
 
   Future<List<todoModel>> fetchData() async {
@@ -35,18 +38,33 @@ class SupabaseServices {
     }
   }
 
-  Future<void> updateData(todoModel data,int id) async {
-
+  Future<void> updateData(todoModel data, int id) async {
     try {
       final res = await supabase.update(data.toJson()).eq('id', id);
       if (res != null) {
-        log("data updated sucess");
+        log("Data updated successfully");
         log("$res");
       } else {
-        log("df");
+        log("No data updated");
       }
     } catch (e) {
-      log("$e");
+      log("Error updating data: $e");
+    }
+  }
+
+  Future<void> uploadImage(File image) async {
+    final supabase = Supabase.instance.client;
+
+    final bucketName = 'images';
+    final fileName = DateTime.now().toIso8601String() + '.jpg';
+
+    try {
+      final response = await supabase.storage.from(bucketName).upload(fileName, image);
+
+      final publicUrl = supabase.storage.from(bucketName).getPublicUrl(fileName);
+      print('File uploaded successfully. Public URL: $publicUrl');
+    } catch (error) {
+      print('Error uploading image: $error');
     }
   }
 }

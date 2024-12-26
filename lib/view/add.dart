@@ -1,4 +1,5 @@
-import 'package:curd_supabase/controller/provider.dart';
+import 'package:curd_supabase/controller/imageProvider.dart';
+import 'package:curd_supabase/controller/todoProvider.dart';
 import 'package:curd_supabase/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,19 +13,49 @@ class AddPage extends StatelessWidget {
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TodoProvider>(
-          builder: (context, value, child) => Column(
+        child: Consumer2<TodoProvider,Imageprovider>(
+          builder: (context,todoPro,imagePro, child) => Column(
             spacing: 20,
             children: [
+              Column(
+                children: [
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.blue[100],
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: imagePro.imageFile != null
+                    ? ClipOval(
+                        child: Image.file(
+                          imagePro.imageFile!, 
+                          fit: BoxFit.cover,
+                          width: 100,
+                          height: 100,
+                        ),
+                      )
+                    : Icon(
+                        Icons.image,
+                        size: 50,
+                        color: Colors.grey,
+                      ),
+              ),
+              
+                  ElevatedButton(onPressed: (){
+                  imagePro.pickImage();
+                  }, child: Text("Add image")),
+                ],
+              ),
               TextField(
-                controller: value.titleCtrl,
+                controller: todoPro.titleCtrl,
                 decoration: InputDecoration(
                   hintText: 'title',
                   border: OutlineInputBorder(),
                 ),
               ),
               TextField(
-                controller: value.subtitleCtrl,
+                controller: todoPro.subtitleCtrl,
                 decoration: InputDecoration(
                   hintText: 'subtitle',
                   border: OutlineInputBorder(),
@@ -32,12 +63,13 @@ class AddPage extends StatelessWidget {
               ),
               ElevatedButton(
                   onPressed: () {
-                    value.addData(todoModel(
-                        subtitle: value.subtitleCtrl.text,
-                        title: value.titleCtrl.text));
+                    todoPro.addData(todoModel(
+                        subtitle: todoPro.subtitleCtrl.text,
+                        title: todoPro.titleCtrl.text));
+                          imagePro.addImage();
                     Navigator.pop(context);
-                    value.titleCtrl.clear();
-                    value.subtitleCtrl.clear();
+                    todoPro.titleCtrl.clear();
+                    todoPro.subtitleCtrl.clear();
                   },
                   child: Text("submit")),
             ],

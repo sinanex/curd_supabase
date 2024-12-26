@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:curd_supabase/controller/provider.dart';
+import 'package:curd_supabase/controller/todoProvider.dart';
 import 'package:curd_supabase/model/model.dart';
 import 'package:curd_supabase/services/services.dart';
 import 'package:flutter/material.dart';

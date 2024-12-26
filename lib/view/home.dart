@@ -1,4 +1,4 @@
-import 'package:curd_supabase/controller/provider.dart';
+import 'package:curd_supabase/controller/todoProvider.dart';
 import 'package:curd_supabase/view/add.dart';
 import 'package:curd_supabase/view/update.dart';
 import 'package:flutter/material.dart';

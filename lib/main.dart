@@ -1,5 +1,6 @@
 import 'package:curd_supabase/constants/supbaseKey.dart';
-import 'package:curd_supabase/controller/provider.dart';
+import 'package:curd_supabase/controller/imageProvider.dart';
+import 'package:curd_supabase/controller/todoProvider.dart';
 import 'package:curd_supabase/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +19,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => TodoProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create:(context) => TodoProvider(),),
+        ChangeNotifierProvider(create:(context) => Imageprovider(),),
+      ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: HomePage(),
       ),
     );
