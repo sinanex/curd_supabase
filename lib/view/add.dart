@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddPage extends StatelessWidget {
- const AddPage({super.key});
+  const AddPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +33,12 @@ class AddPage extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     value.addData(todoModel(
-                        subtitle: value.subtitleCtrl.text.trim(),
-                        title: value.titleCtrl.text.trim()));
+                        subtitle: value.subtitleCtrl.text,
+                        title: value.titleCtrl.text));
+                    Navigator.pop(context);
+                    value.titleCtrl.clear();
+                    value.subtitleCtrl.clear();
                   },
-               
                   child: Text("submit")),
             ],
           ),

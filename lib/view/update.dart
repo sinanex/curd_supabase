@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:curd_supabase/controller/provider.dart';
 import 'package:curd_supabase/model/model.dart';
+import 'package:curd_supabase/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,8 +61,9 @@ class _editPageState extends State<editPage> {
                   onPressed: () {
                     value.updateData(
                         data: todoModel(
-                            subtitle: widget.subtitle, title: widget.title),
+                            subtitle: subtitle.text, title: title.text),
                         id: widget.id!);
+                  log("");
                   },
                   child: Text("submit")),
             ],

@@ -22,10 +22,13 @@ class TodoProvider extends ChangeNotifier {
   }
 
   void addData(todoModel data) async {
-    services.insertData(data);
+   try {
+      services.insertData(data);
+   } catch (e) {
+     log("$e");
+   }
     fetchData();
-    titleCtrl.clear;
-    subtitleCtrl.clear();
+
     notifyListeners();
   }
 
@@ -35,11 +38,8 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
   void updateData({required todoModel data ,required int id})async{
-  await services.updateData(data, id);
+  await services.updateData(data,id);
   fetchData();
   notifyListeners();
-  }
-  void refreshData(){
-    fetchData();
   }
 }

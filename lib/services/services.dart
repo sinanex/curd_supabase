@@ -10,7 +10,7 @@ class SupabaseServices {
     try {
       await supabase.insert([todoData.toJson()]);
     } catch (e) {
-      print('Error inserting data: $e');
+      throw Exception('Error inserting data: $e');
     }
   }
 
@@ -34,17 +34,19 @@ class SupabaseServices {
       return [];
     }
   }
-  Future<void>updateData(todoModel data , int id)async{
-try {
-   final res =  await supabase.update(data.toJson()).eq('id', id).select().asStream();
- if(res != null){
-  log("data updated sucess");
- }else{
-  log("df");
- }
-} catch (e) {
-  log("$e");
-}
 
+  Future<void> updateData(todoModel data,int id) async {
+
+    try {
+      final res = await supabase.update(data.toJson()).eq('id', id);
+      if (res != null) {
+        log("data updated sucess");
+        log("$res");
+      } else {
+        log("df");
+      }
+    } catch (e) {
+      log("$e");
+    }
   }
 }
