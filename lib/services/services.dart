@@ -1,12 +1,12 @@
-
 import 'dart:developer';
+import 'dart:ffi';
 import 'dart:io';
 import 'package:curd_supabase/model/model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseServices {
   final supabase = Supabase.instance.client.from('todoApp');
-
+  final bucketName = 'images';
   Future<void> insertData(todoModel todoData) async {
     try {
       await supabase.insert([todoData.toJson()]);
@@ -55,16 +55,48 @@ class SupabaseServices {
   Future<void> uploadImage(File image) async {
     final supabase = Supabase.instance.client;
 
-    final bucketName = 'images';
-    final fileName = DateTime.now().toIso8601String() + '.jpg';
+    final fileName = 'image' + DateTime.now().toString() + '.jpg';
 
     try {
-      final response = await supabase.storage.from(bucketName).upload(fileName, image);
-
-      final publicUrl = supabase.storage.from(bucketName).getPublicUrl(fileName);
-      print('File uploaded successfully. Public URL: $publicUrl');
+      await supabase.storage.from(bucketName).upload(fileName, image);
     } catch (error) {
       print('Error uploading image: $error');
     }
   }
+
+  Future<List<String>> getBucketSupabse() async {
+    try {
+      final List<FileObject> objects =
+          await Supabase.instance.client.storage.from('images').list();
+      if (objects.isNotEmpty) {
+        log("success fetching images ${objects.length -1}");
+        return objects
+            .map((img) => Supabase.instance.client.storage
+                .from('images')
+                .getPublicUrl(img.name))
+            .toList();
+      } else {
+        log("error fetchin ");
+      }
+    } catch (e) {
+      log("$e");
+    }
+    return [];
+  }
+
+  Future deleteFile(String path) async {
+    int lastSlashIndex = path.lastIndexOf('/image');
+
+    String fileName = path.substring(lastSlashIndex + 1);
+    String cleanedFileName = fileName.replaceAll('%20', ' ');
+    log("File deleted : $cleanedFileName");
+    try { await Supabase.instance.client.storage
+          .from('images')
+          .remove([cleanedFileName]);
+    } catch (e) {
+      log("Failed to delete file: $e");
+      return false;
+    }
+  }
 }
+

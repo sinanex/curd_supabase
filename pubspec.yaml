@@ -40,6 +40,10 @@ dependencies:
   image_picker: ^1.1.2
   http: ^1.2.2
   dio: ^5.7.0
+  supabase_client: ^0.0.30
+  storage_client: ^2.3.0
+  cached_network_image: ^3.4.1
+  sqflite: ^2.4.1
 
 dev_dependencies:
   flutter_test:

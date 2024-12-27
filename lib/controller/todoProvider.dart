@@ -27,19 +27,16 @@ class TodoProvider extends ChangeNotifier {
    } catch (e) {
      log("$e");
    }
-    fetchData();
 
     notifyListeners();
   }
 
   void deleteData({required int id}) async {
     services.deleteData(id);
-    fetchData();
     notifyListeners();
   }
   void updateData({required todoModel data ,required int id})async{
   await services.updateData(data,id);
-  fetchData();
   notifyListeners();
   }
 }
